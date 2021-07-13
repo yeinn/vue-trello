@@ -12,6 +12,8 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from "vuex";
+import { board } from "../api";
 export default {
   data() {
     return {
@@ -19,16 +21,19 @@ export default {
       loading: false
     };
   },
+  computed: {
+    ...mapState({ board: "board" })
+  },
   created() {
     this.fetchData();
   },
   methods: {
+    ...mapActions(["FETCH_BOARD"]),
     fetchData() {
       this.loading = true;
-      setTimeout(() => {
-        this.bid = this.$route.params.bid;
-        this.loading = false;
-      }, 500);
+      this.FETCH_BOARD({ id: this.$route.params.bid }).then(
+        () => (this.loading = false)
+      );
     }
   }
 };

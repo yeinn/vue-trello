@@ -58,9 +58,10 @@ export default {
   methods: {
     ...mapActions(["LOGIN"]),
     onSubmit() {
+      console.log(this.returnURL);
       this.LOGIN({ email: this.email, password: this.password })
         .then(data => {
-          this.$router.push(this.returnURL);
+          this.$router.replace(this.returnURL);
         })
         .catch(err => {
           this.error = err.data.error;
